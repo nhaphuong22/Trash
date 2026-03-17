@@ -1,114 +1,75 @@
-# Google Antigravity
+# 🗑️ AI Waste Sorter System (Jetson Nano + YOLO)
 
-[English](./README.md) | [Tiếng Việt](./README.vi.md)
-
-> **Antigravity IDE: The Intelligent Operating System for AI Engineers & Project Squads.**  
-> *Transform your AI from a chatbot into a professional Specialist Squad with standard operating procedures.*
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![npm version](https://badge.fury.io/js/antigravity-ide.svg)](https://badge.fury.io/js/antigravity-ide)
-
-**Google Antigravity** is more than just a skill collection; it is a comprehensive **Orchestration Framework**. it provides an "AI Battlefield" environment where AI agents collaborate through a professional production line (PDCA), ensuring every line of code is audited and optimized.
-
-| **27** Master Skills | **15** Specialist Agents | **21** Workflows | **17** Shared DNA Modules |
-| :---: | :---: | :---: | :---: |
-| Containing 600+ Capabilities | Role-Based Personas | PDCA Cycle | Industry Blueprints |
+Dự án sử dụng Trí tuệ nhân tạo (YOLO) để nhận diện và phân loại rác thải (Kim loại & Nhựa) trong thời gian thực, kết hợp với cánh tay Servo để thực hiện hành động phân loại vật lý trên phần cứng NVIDIA Jetson.
 
 ---
 
-## 🚀 1. Quick Scaffolding
-
-Set up your mission-critical environment in 30 seconds using the CLI:
-
-```sh
-# 1. Create a new project (Recommended)
-npx antigravity-ide my_project
-
-# 2. Smart install in current directory
-npx antigravity-ide
-```
-
-### ✨ Setup Wizard Features (v4.0.0 - Big Update)
-The new interactive CLI puts you in control with a **Scale-Adaptive Engine**:
-
-1.  **Scale-Adaptive Architecture**:
-    - **Flexible (Solo-Ninja)**: Optimized for speed. Hybrid agents with cross-domain capabilities. Fast-track execution.
-    - **Balanced (Agile-Squad)**: Coordinated workflow with plan verification. Focused specialist agents.
-    - **Strict (Software-Factory)**: Enterprise-grade standardization. Mandatory security audits and quality gates.
-
-2.  **Scientific Metadata Linkage**:
-    - **Unified Connection**: Every file in `.agent` is linked via YAML metadata to its **DNA** (`.shared`), **Rules** (`rules/`), and **Skills** (`skills/`).
-    - **Context-Aware Invocations**: Agents automatically summon the right knowledge based on the file domain and project scale.
-
-3.  **Smart Allocation Logic**:
-    - **Scale (Quy mô)**: Determines the **Operation Mode** (Ninja vs Squad vs Factory) and **Compliance Depth**.
-    - **Product Type**: Automatically loads the exact **Skills & Workflows** you need:
-        - 📱 **User Application**: App/Web/Mobile/Desktop (Activates *WebDev/Mobile/Testing/UIUX* Skills).
-        - 🛠️ **Developer Tool**: CLI/Library/API (Activates *DevOps/Testing* Skills).
-        - 🤖 **AI Agent**: Chatbot/Automation (Activates *AI/Maker/Research* Skills).
-        - 🎨 **Digital Asset**: Game/Template/Media (Activates *GameDev/SEO/UIUX* Skills).
-
-4.  **Context Injection**:
-    - **Name your Agent**: Personalize your AI (e.g., *Jarvis*, *Friday*).
-    - **Multi-Persona Orchestration**: Coordinate up to 15 specialist agents through a unified command.
-    - *Auto-Injection*: These details are deeply embedded into `.agent/rules/GEMINI.md`.
-
-5.  **Security & Learning Systems (v4.0.x)**:
-    - **🛡️ Malware Protection**: Automatic scanning of malicious URLs and links before loading external resources.
-    - **🔄 Auto-Update Chat**: AI proactively checks NPM for new versions and offers to upgrade via chat.
-    - **🐛 Error Logging**: AI automatically logs all errors to `ERRORS.md` for analysis and learning (v4.0.2).
-    - **📊 Smart Prevention**: Classifies errors by Type/Severity, suggests fixes, and prevents recurrence.
-    - **🎓 Self-Learning**: Errors repeated ≥ 2 times → AI auto-creates new Rules or Test cases.
-
-### Engine Modes
-- **⚡ Standard (Node.js)**: High-speed, lightweight, perfect for Web/SaaS projects.
-- **🧠 Advanced (Python)**: Deep AI integration, Data Science, and automated Security Scanners.
-
-### Identity Awareness & Brain-Drop Protection
-You can assign a unique name to your Agent (e.g., *Jarvis*). This acts as an "Identity Anchor" to verify if the AI is still adhering to the system rules and operational flow.
+## 🚀 Tính năng chính
+* **AI Real-time Detection:** Sử dụng YOLOv8 (tối ưu hóa TensorRT `.engine`) để nhận diện rác với độ trễ thấp.
+* **Hardware Control:** Điều khiển 2 động cơ Servo để phân loại rác vào các ngăn tương ứng thông qua thư viện Jetson.GPIO.
+* **Web Dashboard:** Livestream quá trình nhận diện và thống kê số lượng qua giao thức HTTP (Flask).
+* **Stability Logic:** Thuật toán lọc nhiễu dựa trên lịch sử khung hình giúp hệ thống hoạt động chính xác, tránh gạt nhầm.
 
 ---
 
-## 🧠 2. The Core Brain: `.agent` Folder
+## 🛠️ Luồng vận hành (Workflow)
 
-The `.agent` directory is where the system's intelligence resides:
 
-- **Specialist Agent System**: Includes the Project Planner, Backend/Frontend Specialists, Security Auditor, and the Orchestrator (Captain).
-- **PDCA Cycle (Plan-Do-Check-Act)**: AI doesn't just "write code." It follows a rigorous Plan -> Implement -> Inspect -> Approve cycle.
-- **Shared Knowledge DNA (`.shared/`)**: Contains the project's core principles, including API Standards, DB Schemas, Compliance docs, and Domain Blueprints (Fintech, Edtech, etc.).
 
----
+### 1. Khởi tạo & Thiết lập (Initialization)
+Hệ thống bắt đầu bằng việc cấu hình môi trường tính toán và phần cứng:
+* **Tối ưu hóa:** Cấu hình `OpenBLAS` và `libgomp` để tối đa hiệu suất tính toán trên kiến trúc ARM (kiến trúc ở trên Jetson).
+* **GPIO:** Thiết lập chân **32 (Metal)** và **33 (Plastic)** theo chế độ BOARD.
+* **Model:** Ưu tiên tải mô hình đã được build qua TensorRT (`.engine`) để chạy cực nhanh, nếu không có sẽ tự động chuyển sang mô hình PyTorch (`.pt`).
+* **Multi-threading:** Khởi chạy Flask server tại cổng `5000` trên một luồng riêng để không làm gián đoạn luồng xử lý AI.
 
-## ⚡ 3. Slash Commands (`/`) & Updates
+### 2. Luồng xử lý hình ảnh chính (Main Loop)
+Quá trình xử lý diễn ra lặp hồi qua 3 bước:
+* **Bước A - Tiền xử lý:** Camera đọc khung hình, vẽ Dashboard thống kê và xác định vùng **ROI (Region of Interest)**. AI chỉ tập trung quét trong vùng từ `(150, 100)` đến `(490, 380)` để tiết kiệm tài nguyên.
+* **Bước B - Nhận diện:** Sử dụng `FRAME_SKIP=2` để giảm tải cho GPU. Hệ thống tìm vật thể có diện tích lớn nhất trong vùng ROI và có độ tự tin (Confidence) trên 50%.
+* **Bước C - Thuật toán ổn định:** Kết quả được đưa vào một hàng đợi (Queue). Cánh tay cơ khí chỉ kích hoạt khi một loại rác (METAL hoặc PLASTIC) xuất hiện ổn định ít nhất **3 lần** trong các khung hình gần nhất.
 
-Trigger deep workflows directly within your AI chat interface:
+### 3. Điều khiển Servo (Actuation)
+Khi rác được xác nhận ổn định:
+* **Metal (Chân 32):** Sử dụng xung PWM phần cứng, gạt một góc 135° rồi quay lại 90°.
+* **Plastic (Chân 33):** Sử dụng xung PWM mềm, gạt một góc 45° rồi quay lại 90°.
+* **Cooldown:** Hệ thống áp dụng khoảng nghỉ 2.5 giây giữa các lần gạt để cơ cấu cơ khí có thời gian hồi vị.
 
-- `/plan`: Outline requirements and break down tasks (Project Planner).
-- `/create`: Scaffold the project's foundation.
-- `/ui-ux-pro-max`: Design premium interfaces & micro-interactions.
-- `/orchestrate`: Coordinate multiple agents to solve complex problems.
-- `/update`: Check for updates and upgrade Antigravity IDE to the latest version.
-- `/log-error`: Auto error logging (runs in background, no manual invocation needed).
 
-### System Updates
-Update the Antigravity Brain to the latest version while preserving your custom configurations:
-```sh
-npx antigravity-ide update
-```
 
 ---
 
-## 📂 Project Structure
-
-```text
-my-project/
-├── .agent/           # 🧠 THE BRAIN: DNA, Skills & Rules
-│   ├── .shared/      # ⛩️ Master Knowledge (API, DB, Design)
-│   ├── agents/       # 🎭 Specialist Agent Personas
-│   └── skills/       # 🛠️ 600+ Mission-Ready Skills
-└── cli/              # ⚡ CLI: Scaffolding management
-```
+## 📊 Thông số kỹ thuật
+| Thông số | Giá trị |
+| :--- | :--- |
+| **Model Size** | 320x320 px |
+| **Vùng ROI** | 150x100 đến 490x380 |
+| **Ngưỡng tự tin (Conf)** | 0.50 |
+| **Thời gian nghỉ (Cooldown)** | 2.5 giây |
+| **Cổng Web Stream** | 5000 |
 
 ---
 
-**Antigravity IDE** - Breaking the laws of gravity to elevate your projects. 🛰️🚀
+## 💻 Cài đặt & Sử dụng
+
+### Yêu cầu hệ thống
+* Thiết bị NVIDIA Jetson (Nano, Xavier, hoặc Orin).
+* Thư viện: `opencv-python`, `torch`, `ultralytics`, `Jetson.GPIO`, `flask`.
+
+### Cách chạy
+1.  Kết nối Camera USB và 2 Servo vào chân GPIO 32 và 33.
+2.  Mở terminal và chạy lệnh:
+    ```bash
+    python3 main.py
+    ```
+3.  Xem livestream tại địa chỉ: `http://localhost:5000/video_feed` (thay localhost bằng IP của Jetson nếu xem từ máy khác).
+
+---
+
+## 🛡️ Quản lý tài nguyên & An toàn
+* **Memory Management:** Tự động giải phóng bộ nhớ đệm CUDA và rác (Garbage Collection) sau mỗi 100 khung hình để tránh treo máy.
+* **Thread Safety:** Sử dụng `threading.Lock()` để đảm bảo luồng livestream không truy cập dữ liệu cùng lúc với luồng xử lý AI.
+* **Cleanup:** Khi dừng chương trình (`Ctrl+C`), hệ thống tự động tắt xung PWM và giải phóng các chân GPIO để bảo vệ linh kiện.
+
+---
+*Developed for Smart Waste Management Systems.*
