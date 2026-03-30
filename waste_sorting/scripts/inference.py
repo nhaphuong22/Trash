@@ -8,14 +8,14 @@ Các module đã tách:
   - api_routes.py        → Flask API routes
 """
 
-import cv2
-import torch
-import time
+import cv2 #OpenCV	Xử lý ảnh, đọc camera, vẽ hình
+import torch #PyTorch	Framework Deep Learning (YOLO chạy trên nền này)
+import time #Xử lý thời gian (đo delay, cooldown)
 import gc
 import collections
-import threading
-from flask import Flask
-from ultralytics import YOLO
+import threading #Chạy đa luồng (Flask chạy song song với camera)
+from flask import Flask #Flask	Tạo web server (xem camera qua trình duyệt)
+from ultralytics import YOLO #Model YOLO nhận diện vật thể
 
 from config import (
     MODEL_PATH, IMG_SIZE, CONF_THRESHOLD, STATIC_DIR,
@@ -71,8 +71,8 @@ def main():
         print('[ERR] CAMERA FAIL')
         return
 
-    frame_count   = 0
-    last_act_time = time.time()
+    frame_count   = 0 # Đếm số frame đã đọc
+    last_act_time = time.time() #Thời điểm kích hoạt servo gần nhất (cooldown)
     history       = collections.deque(maxlen=10)
 
     # Thuật toán trừ nền MOG2
@@ -124,7 +124,7 @@ def main():
                 # --- YOLO predict ---
                 results = model.predict(
                     source=roi, conf=CONF_THRESHOLD, imgsz=IMG_SIZE,
-                    device=0, verbose=False,
+                    device='cpu', verbose=False,
                 )[0]
 
                 best_det, max_area = None, 0
@@ -178,17 +178,11 @@ def main():
                 is_tracking_object = False
                 print("[MOTION] <<< Đã xử lý xong vật.")
 
-            if is_tracking_object and not AI_classified_current_object:
-                if (time.time() - object_detected_time) > OTHER_TIMEOUT:
-                    print("[OTHER] Thời gian ngâm trong camera quá lâu -> Cộng OTHER.")
-                    trigger_servo_logic('other', um.counts, um.active_user_id, um.session_points)
-                    AI_classified_current_object = True
-
             # Cập nhật frame cho video stream
             api_routes.update_frame(frame)
 
             if frame_count % 100 == 0:
-                torch.cuda.empty_cache()
+                pass  # no GPU cache to clear
                 gc.collect()
 
     except KeyboardInterrupt:
