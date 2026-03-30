@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0f1117">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Trash Rewards</title>
+<link rel="manifest" href="/static/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/user.css">
+</head>
+<body>
+
+<!-- Screen 1: Nhập ID -->
+<div class="screen active" id="scr-login">
+  <div class="logo">♻️</div>
+  <h2>Trash Rewards</h2>
+  <p class="subtitle">Nhập ID để bắt đầu tích điểm</p>
+  <div class="input-wrap">
+    <input id="uid-input" type="text" placeholder="Nhập ID thành viên..."
+           autocomplete="off" autocapitalize="characters">
+  </div>
+  <button class="btn btn-primary" onclick="startSession()">
+    ▶ Bắt đầu bỏ rác
+  </button>
+  <p id="login-err" class="err-msg"></p>
+</div>
+
+<!-- Toast thông báo (fixed bottom) -->
+<div class="toast-msg" id="toast-msg"></div>
+
+<!-- Screen 2: Phiên đang chạy -->
+<div class="screen" id="scr-session">
+  <div class="user-badge">
+    <div class="avatar" id="sess-avatar"></div>
+    <div>
+      <div class="sess-name" id="sess-name"></div>
+      <div class="sess-sub">Đang trong phiên bỏ rác</div>
+    </div>
+  </div>
+
+  <!-- Status Banner -->
+  <div class="status-banner state-idle" id="status-banner">
+    <span class="status-icon" id="status-icon">✅</span>
+    <div class="status-text">
+      <div class="status-title" id="status-title">Sẵn sàng!</div>
+      <div class="status-sub" id="status-sub">Vui lòng bỏ 1 chai hoặc lon vào</div>
+    </div>
+  </div>
+
+  <div class="card text-center">
+    <div class="pts-label">ĐIỂM PHIÊN NÀY</div>
+    <div class="session-total" id="sess-total">0</div>
+    <div class="waiting">
+      <span class="spin"></span>Đang chờ bỏ rác...
+    </div>
+  </div>
+
+  <div class="breakdown">
+    <div class="br-item">
+      <div class="br-lbl">
+        <span class="dot" style="background:#48bb78"></span>Metal (+10đ)
+      </div>
+      <span class="br-val metal-c" id="br-metal">×0</span>
+    </div>
+    <div class="br-item">
+      <div class="br-lbl">
+        <span class="dot" style="background:#63b3ed"></span>Plastic (+5đ)
+      </div>
+      <span class="br-val plastic-c" id="br-plastic">×0</span>
+    </div>
+    <div class="br-item">
+      <div class="br-lbl">
+        <span class="dot" style="background:#718096"></span>Other (+1đ)
+      </div>
+      <span class="br-val other-c" id="br-other">×0</span>
+    </div>
+  </div>
+
+  <button class="btn btn-danger" onclick="endSession()">⏹ Kết thúc phiên</button>
+</div>
+
+<!-- Screen 3: Kết quả -->
+<div class="screen" id="scr-result">
+  <div class="reward-icon">🎉</div>
+  <div class="reward-pts" id="res-earned">+0 điểm</div>
+  <div class="reward-sub">Bạn vừa nhận được</div>
+  <div class="total-pts" id="res-total"></div>
+  <button class="btn btn-primary new-session-btn" onclick="goLogin()">
+    🔄 Phiên mới
+  </button>
+</div>
+
+<script src="/static/user.js"></script>
+</body>
+</html>
