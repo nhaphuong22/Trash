@@ -15,4 +15,5 @@
 - python3 -m pip install flask Jetson.GPIO numpy==1.23.5
 
 - cd ../workspace/scripts
+
 - python3 inference.py
