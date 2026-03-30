@@ -1,0 +1,321 @@
+/* user.css — Trash Rewards Mobile PWA */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0f1117;
+  color: #e2e8f0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ── Screens ─────────────────────────────────────────────────── */
+.screen {
+  width: 100%;
+  max-width: 380px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: fadeIn .4s ease;
+}
+
+.screen.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Login Screen ─────────────────────────────────────────────── */
+.logo { font-size: 64px; margin-bottom: 4px; }
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(135deg, #48bb78, #63b3ed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle { font-size: .9rem; color: #718096; text-align: center; }
+
+.input-wrap { width: 100%; }
+
+input {
+  width: 100%;
+  padding: 16px 20px;
+  background: #1a1f2e;
+  border: 2px solid #2d3748;
+  border-radius: 14px;
+  color: #e2e8f0;
+  font-family: inherit;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color .2s;
+  text-align: center;
+  letter-spacing: .1em;
+}
+
+input:focus   { border-color: #48bb78; }
+input::placeholder { color: #4a5568; letter-spacing: 0; }
+
+.err-msg {
+  color: #fc8181;
+  font-size: .85rem;
+  text-align: center;
+  min-height: 20px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #38a169, #3182ce);
+  color: #fff;
+}
+
+.btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 24px #38a16940; }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-danger {
+  background: #e53e3e20;
+  color: #fc8181;
+  border: 2px solid #e53e3e40;
+}
+
+.new-session-btn { margin-top: 8px; }
+
+/* ── Session Screen ──────────────────────────────────────────── */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #38a169, #3182ce);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: .9rem;
+  flex-shrink: 0;
+}
+
+.sess-name { font-weight: 700; font-size: 1rem; }
+.sess-sub  { color: #718096; font-size: .8rem; }
+
+/* ── Card ────────────────────────────────────────────────────── */
+.card {
+  width: 100%;
+  background: #1a1f2e;
+  border: 1px solid #2d3748;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.text-center { text-align: center; }
+
+.pts-label { color: #718096; font-size: .8rem; margin-bottom: 4px; }
+
+.session-total {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #48bb78, #63b3ed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 8px 0;
+}
+
+.waiting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #718096;
+  font-size: .9rem;
+}
+
+.spin {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #48bb7840;
+  border-top-color: #48bb78;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Breakdown ───────────────────────────────────────────────── */
+.breakdown { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+
+.br-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0f1117;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.br-lbl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.br-val   { font-weight: 700; font-size: 1.1rem; }
+.metal-c  { color: #48bb78; }
+.plastic-c{ color: #63b3ed; }
+.other-c  { color: #718096; }
+
+/* ── Result Screen ───────────────────────────────────────────── */
+.reward-icon {
+  font-size: 80px;
+  animation: bounce .6s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.2); }
+}
+
+.reward-pts {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #48bb78;
+  text-align: center;
+}
+
+.reward-sub { color: #718096; text-align: center; font-size: .9rem; }
+
+.total-pts {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #63b3ed;
+  text-align: center;
+}
+
+/* ── Status Banner ───────────────────────────────────────────── */
+.status-banner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  transition: background .4s ease, border-color .4s ease;
+}
+
+.status-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.status-title {
+  font-size: .95rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.status-sub {
+  font-size: .78rem;
+  opacity: .75;
+}
+
+/* State: Sẵn sàng */
+.state-idle {
+  background: #1a2e22;
+  border-color: #38a16950;
+}
+.state-idle .status-title { color: #68d391; }
+.state-idle .status-sub   { color: #9ae6b4; }
+
+/* State: Đang xử lý */
+.state-processing {
+  background: #2d1f0e;
+  border-color: #dd6b2050;
+  animation: bannerPulse 1.8s ease-in-out infinite;
+}
+.state-processing .status-title { color: #f6ad55; }
+.state-processing .status-sub   { color: #fbd38d; }
+.state-processing .status-icon  { animation: spinIcon 1.2s linear infinite; }
+
+@keyframes bannerPulse {
+  0%, 100% { box-shadow: 0 0 0 0 #dd6b2020; }
+  50%       { box-shadow: 0 0 0 6px #dd6b2000; }
+}
+
+@keyframes spinIcon {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Toast ───────────────────────────────────────────────────── */
+.toast-msg {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #1a2e22;
+  color: #68d391;
+  border: 1.5px solid #38a16970;
+  padding: 12px 22px;
+  border-radius: 40px;
+  font-size: .9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 8px 32px #00000060;
+  opacity: 0;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s ease;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.toast-msg.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
